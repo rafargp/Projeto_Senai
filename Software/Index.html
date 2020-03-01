@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap-4.4.1/css/bootstrap.css">
+    <!-- Project Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Projeto Senai</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="padding-bottom:30px">Projeto de localização de Beacons Bluetooth Indoor utilizando ESP32</h2>
+        <div class="row">
+            <div class="col-sm-9">
+                <canvas id="myCanvas"></canvas>
+            </div>
+            <div class="col-sm-3">
+                <table class="table table-striped" id="tableData">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">#</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+            </div>
+        </div>
+    </div>
+    <!-- https://api.jquery.com/ -->
+    <script src="jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <!-- https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
+    <script src="bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <!-- http://www.eclipse.org/paho/files/jsdoc/Paho.MQTT.Client.html -->
+    <script src="mqttws31/mqttws31.min.js"></script> 
+    <!-- PROJECT -->
+    <script src="mqttConfig.js"></script>
+</body>
+
+</html>
