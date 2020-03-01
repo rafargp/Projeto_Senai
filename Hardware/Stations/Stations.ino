@@ -1,3 +1,5 @@
+#include <HTTP_Method.h>
+#include <HTTP_Method.h>
 #include <sstream>
 #include <string>
 #include <WiFi.h>
@@ -6,9 +8,12 @@
 #include <BLEUtils.h>
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
+#include <WebServer.h>
+#include <AutoConnect.h>
 
 #define MQTT_MAX_PACKET_SIZE 1844
 #define MAX_BEACONS_BUFFER 50
+
 const int   beaconScanTime    = 4;
 const char *stationName       = "Station 1";
 const char *ssid              = "RAFAEL - 2.4G";
@@ -27,6 +32,9 @@ typedef struct
   char *name;
 } BeaconData;
 
+
+WebServer Server;
+AutoConnect Portal(Server);
 WiFiClient espClient;
 PubSubClient client(espClient);
 BeaconData beacons[MAX_BEACONS_BUFFER];
@@ -67,8 +75,6 @@ void connectWiFi()
     delay(2000);
     Serial.println("Connecting to WiFi...");
   }
-  Serial.print("Connected to the WiFi network ");
-  Serial.println(ssid);
 }
 
 void connectMQTT()
@@ -83,12 +89,10 @@ void connectMQTT()
       Serial.println("Client Connected");
       Serial.println("Subscribing to topic:");
       boolean result;
-      for(int x=0;x<=sizeof(subTopics)-1;x++){
-        Serial.print(subTopics[x]);
-        result = client.subscribe(subTopics[x]);
-        Serial.print(".....");
-        Serial.println(result);
-      }
+      Serial.print(subTopics[0]);
+      result = client.subscribe(subTopics[0]);
+      Serial.print(".....");
+      Serial.println(result);
     }
     else
     {
