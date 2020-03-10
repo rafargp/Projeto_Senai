@@ -24,13 +24,13 @@
             <div class="col-sm-3">
                 <table class="table table-striped" id="tableData">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Address</th>
+                        <tr id="tableHead">
+                            <th scope="col">MAC Address</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody">
                         <tr>
-                            <th scope="row">#</th>
+                            <th scope="row">rssi</th>
                         </tr>
                     </tbody>
                 </table>
@@ -49,6 +49,8 @@
     <script src="mqttws31/mqttws31.min.js"></script> 
     <!-- PROJECT -->
     <script src="mqttConfig.js"></script>
+    <script src="station.js"></script>
+    <script src="beacon.js"></script>
 </body>
 
 </html>
