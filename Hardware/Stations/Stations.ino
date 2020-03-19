@@ -1,5 +1,4 @@
 #include <HTTP_Method.h>
-#include <HTTP_Method.h>
 #include <sstream>
 #include <string>
 #include <WiFi.h>
@@ -165,7 +164,6 @@ void sendBeacons(){
 }
 void loop()
 {
-  scanBeacons();
   connectWiFi();
   connectMQTT();
   delay(500);
