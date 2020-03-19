@@ -1,7 +1,7 @@
 #myCanvas {
-    image-rendering: pixelated;
+    /* image-rendering: pixelated;
     image-rendering: crisp-edges;
-    image-rendering: -moz-crisp-edges;
+    image-rendering: -moz-crisp-edges; */
     border: 1px solid black;
     width: 600px;
     height: 600px;

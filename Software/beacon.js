@@ -11,7 +11,17 @@ const beacon1 = {
 }
 
 // *****************************************************************
-
+function drawBeacon(beacon){
+    console.log(`drawBeacon -> ${beacon.mac}`);
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    // ctx.arc(beacon.x, beacon.y, 50, 0, 2 * Math.PI);
+    ctx.fillStyle = "#00FF00";
+    ctx.arc(300, 250, 20, 0, 2 * Math.PI);
+    ctx.stroke(); 
+    console.log(`drawBeacon -> beacon ${beacon.mac} foi desenhado`);
+}
 function addBeacon(beacon) {
     if (stations[beacon.station] === undefined) {
         console.log(`addBeacon -> ${beacon.station} não encontrada`);
@@ -19,6 +29,7 @@ function addBeacon(beacon) {
     }
     stations[beacon.station].beacons.push(beacon);
     console.log(`addBeacon -> ${beacon.mac} adicionado`);
+    drawBeacon(beacon);
     return true;
 }
 function delBeacon(beacon) {

@@ -5,8 +5,8 @@ const stations =  {
         id: function(){ return this.mac.replace(":","");},
         name: "station 1",
         mac: "123:123:123",
-        x: 30,
-        y: 30,
+        x: 1,
+        y: 1,
         beacons: []
     },
     station2: {
@@ -32,9 +32,10 @@ function addStation(station){
 function drawStations(){
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#FF0000";
     for(var station in stations){
         var st = stations[station];
-        ctx.fillRect(st.x,st.y,10,10);
+        ctx.fillRect(st.x,st.y,25,20);
         console.log(`drawStations -> Estação ${st.name} (${st.mac}) desenhado em x:${st.x} y:${st.y}`);
     }
 }
