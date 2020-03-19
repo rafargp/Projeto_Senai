@@ -16,8 +16,10 @@
 
 const int   beaconScanTime    = 4;
 const char *stationName       = "Station 1";
-const char *ssid              = "RAFAEL - 2.4G";
-const char *password          = "Rafael02";
+//const char *ssid            = "RAFAEL - 2.4G";
+//const char *password        = "Rafael02";
+const char *ssid              = "F106_CS10";
+const char *password          = "Senai4.0";
 const char *mqttServer        = "brware.com.br";
 const int   mqttPort          = 1883;
 const char *mqttUser          = "brware";
@@ -29,7 +31,7 @@ typedef struct
 {
   char address[17];
   int rssi;
-  char *name;
+  const char *bName;
 } BeaconData;
 
 
@@ -49,13 +51,15 @@ public:
     extern uint8_t beaconIndex;
     extern BeaconData beacons[];
     if (beaconIndex >= MAX_BEACONS_BUFFER) return;
-
-    if (advertisedDevice.haveRSSI()) beacons[beaconIndex].rssi = advertisedDevice.getRSSI();
-    else beacons[beaconIndex].rssi = 0;
-
+    if (advertisedDevice.haveRSSI()) {
+      beacons[beaconIndex].rssi = advertisedDevice.getRSSI();
+    }else {
+      beacons[beaconIndex].rssi = 0;
+    }
+    
     strcpy(beacons[beaconIndex].address, advertisedDevice.getAddress().toString().c_str());
-    strcpy(beacons[beaconIndex].name, advertisedDevice.getName().c_str());
-
+    Serial.printf("Nome: %s \n",advertisedDevice.getName().c_str());
+    beacons[beaconIndex].bName = advertisedDevice.getName().c_str();
     beaconIndex++;
   }
 };
@@ -82,13 +86,15 @@ void connectMQTT()
   while (!client.connected())
   {
     client.setServer(mqttServer, mqttPort);
+    client.setCallback(mqttCallback);
+    
     Serial.println("Connecting to MQTT...");
     if (client.connect("ESP32Client", mqttUser, mqttPassword))
     {
-      client.setCallback(mqttCallback);
       Serial.println("Client Connected");
       Serial.println("Subscribing to topic:");
       boolean result;
+      
       Serial.print(subTopics[0]);
       result = client.subscribe(subTopics[0]);
       Serial.print(".....");
@@ -101,6 +107,7 @@ void connectMQTT()
       delay(2000);
     }
   }
+  client.loop();
 }
 
 void scanBeacons()
@@ -116,20 +123,18 @@ void scanBeacons()
 }
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
-
   String strPayload = "";
   for (int i = 0; i < length; i++) {
     strPayload += (char)payload[i];
   }
-  
   Serial.print("Message arrived in topic: ");
   Serial.print(topic);
   Serial.print(" => ");
   Serial.println(strPayload);
 
-  if(topic == "command" && strPayload == "find") scanBeacons();
-  else if(topic == "command" && strPayload == "send") sendBeacons();
-  else if(topic == "command" && strPayload == "findAndSend") {
+  if(String(topic) == String(subTopics[0]) && strPayload == "find") scanBeacons();
+  else if(String(topic) == String(subTopics[0]) && strPayload == "send") sendBeacons();
+  else if(String(topic) == String(subTopics[0]) && strPayload == "findAndSend") {
     scanBeacons();
     sendBeacons();
   }
@@ -145,7 +150,7 @@ void sendBeacons(){
     payload += ";";
     payload += stationName;
     payload += ";";
-    payload += String(beacons[i].name);
+    payload += String(beacons[i].bName);
     payload += ";";
     payload += String(beacons[i].address);
     payload += ";";
@@ -160,6 +165,7 @@ void sendBeacons(){
 }
 void loop()
 {
+  scanBeacons();
   connectWiFi();
   connectMQTT();
   delay(500);
