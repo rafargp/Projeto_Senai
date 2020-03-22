@@ -12,8 +12,13 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
+//Remove valor anterior da constante
+#undef  MQTT_MAX_PACKET_SIZE
+//Constante que define o valor maximo de um pacote MQTT para publicação
+#define MQTT_MAX_PACKET_SIZE 2048
 //Constante que define a quantidade maxima que a estaçao poderá ler
 #define MAX_BEACONS_BUFFER 50
+
 //Constante que define o tempo de busca do bluetooth, em segundos
 const int beaconScanTime = 4;
 //Constante que o nome do dispositivo bluetooth da estação
@@ -231,7 +236,7 @@ void sendBeaconsJSON()
   payload += "],\"stMac\":\"";
   payload += String(WiFi.macAddress());
   //Incremento do nome da estação
-  payload += ",\"stNome\":\"";
+  payload += "\",\"stNome\":\"";
   payload += stationName;
   payload += "\"}";
 
