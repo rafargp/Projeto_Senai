@@ -22,11 +22,11 @@ const stations =  {
 // *****************************************************************
 function addStation(station){
     if(stations[station.name] !== undefined){
-        console.log(`addStation -> Estação ${station.name} ja existe na lista com id ${station.id()}`);
+        log.info(`addStation -> Estação ${station.name} ja existe na lista com id ${station.id()}`);
         return false;
     }
     stations.push(station);
-    console.log(`addStation -> Estação ${station.name} foi criada com o id ${station.id()}`);
+    log.info(`addStation -> Estação ${station.name} foi criada com o id ${station.id()}`);
     return true;
 }
 function drawStations(){
@@ -36,7 +36,7 @@ function drawStations(){
     for(var station in stations){
         var st = stations[station];
         ctx.fillRect(st.x,st.y,25,20);
-        console.log(`drawStations -> Estação ${st.name} (${st.mac}) desenhado em x:${st.x} y:${st.y}`);
+        log.info(`drawStations -> Estação ${st.name} (${st.mac}) desenhado em x:${st.x} y:${st.y}`);
     }
 }
 
@@ -45,7 +45,7 @@ function drawTableHeader(){
     for(var station in stations){
         var st = stations[station];
         $(tHead).append(`<th scope="col" id="${st.id()}">${station}</th>`);
-        console.log(`drawTableHeader -> Estação ${st.name} (${st.mac}) adicionado como coluna. ID: ${st.id()}`);
+        log.info(`drawTableHeader -> Estação ${st.name} (${st.mac}) adicionado como coluna. ID: ${st.id()}`);
     }
 }
 

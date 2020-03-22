@@ -6,3 +6,7 @@
     width: 600px;
     height: 600px;
 }
+textarea
+{
+    font: 12px "Times New Roman", Times, serif;
+}

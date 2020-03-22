@@ -15,5 +15,18 @@ var drawGrid = function (w, h, id) {
             ctx.stroke();
         }
     }
-
 };
+var log = {
+    info: function (text){
+        var old = $("#txtLog").val();
+        $("#txtLog").val(`${old}[${new Date(Date.now()).toLocaleString()}][INFO] ${text}\n`);
+    },
+    warn: function (text){
+        var old = $("#txtLog").val();
+        $("#txtLog").val(`${old}[${new Date(Date.now()).toLocaleString()}][WARN] ${text}\n`);
+    },
+    erro: function (text){
+        var old = $("#txtLog").val();
+        $("#txtLog").val(`${old}[${new Date(Date.now()).toLocaleString()}][ERRO] ${text}\n`);
+    }
+}

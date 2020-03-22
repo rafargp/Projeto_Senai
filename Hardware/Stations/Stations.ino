@@ -50,7 +50,7 @@ typedef struct
   //Potencia do sinal do dispositivo bluetooth encontrado
   int rssi;
   //Nome do dispositivo bluetooth encontrado
-  const char *bName;
+  char *bName;
 
 } BeaconData; //Nome da estrutura de dados
 
@@ -86,8 +86,12 @@ public:
 
     //Atribui o endereço MAC do dispositivo a variavel beacons[beaconIndex].address
     strcpy(beacons[beaconIndex].address, advertisedDevice.getAddress().toString().c_str());
+
     //Atribui o nome do dispositivo a variavel beacons[beaconIndex].bName
-    beacons[beaconIndex].bName = advertisedDevice.getName().c_str();
+    std::string str = advertisedDevice.getName();
+    beacons[beaconIndex].bName = new char[str.length() + 1];
+    strcpy(beacons[beaconIndex].bName, str.c_str());
+     
     //Incrementa mais um ao contador de dispositivos
     beaconIndex++;
   }

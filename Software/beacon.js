@@ -12,7 +12,7 @@ const beacon1 = {
 
 // *****************************************************************
 function drawBeacon(beacon){
-    console.log(`drawBeacon -> ${beacon.mac}`);
+    log.info(`drawBeacon -> ${beacon.mac}`);
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
     ctx.beginPath();
@@ -20,21 +20,21 @@ function drawBeacon(beacon){
     ctx.fillStyle = "#00FF00";
     ctx.arc(300, 250, 20, 0, 2 * Math.PI);
     ctx.stroke(); 
-    console.log(`drawBeacon -> beacon ${beacon.mac} foi desenhado`);
+    log.info(`drawBeacon -> beacon ${beacon.mac} foi desenhado`);
 }
 function addBeacon(beacon) {
     if (stations[beacon.station] === undefined) {
-        console.log(`addBeacon -> ${beacon.station} não encontrada`);
+        log.info(`addBeacon -> ${beacon.station} não encontrada`);
         return false;
     }
     stations[beacon.station].beacons.push(beacon);
-    console.log(`addBeacon -> ${beacon.mac} adicionado`);
+    log.info(`addBeacon -> ${beacon.mac} adicionado`);
     drawBeacon(beacon);
     return true;
 }
 function delBeacon(beacon) {
     if (stations[beacon.station] === undefined) {
-        console.log(`delBeacon -> ${beacon.station} não encontrada`);
+        log.info(`delBeacon -> ${beacon.station} não encontrada`);
         return false;
     }
 }
@@ -45,10 +45,10 @@ function reDrawTable() {
             var bc = stations[station].beacons[beacon];
             var row = $(`#${bc.id()}`)[0];
             if (row === undefined) {
-                console.log(`reDrawTable -> Criando nova linha para beacon ${bc.name} (${bc.mac})`);
+                log.info(`reDrawTable -> Criando nova linha para beacon ${bc.name} (${bc.mac})`);
                 drawTableRow(bc)
             } else {
-                console.log(`reDrawTable -> Atualizando linha para beacon ${bc.name} (${bc.mac})`);
+                log.info(`reDrawTable -> Atualizando linha para beacon ${bc.name} (${bc.mac})`);
                 reDrawTableRow(bc);
             }
 
@@ -74,7 +74,7 @@ function drawTableRow(beacon) {
     }
     print += `</tr>`;
 
-    console.log(`drawTableRow -> Nova linha criada para beacon ${beacon.name} (${beacon.mac})`);
+    log.info(`drawTableRow -> Nova linha criada para beacon ${beacon.name} (${beacon.mac})`);
 
     tBody.append(print);
 }

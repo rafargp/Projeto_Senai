@@ -1,4 +1,10 @@
+//Cliente MQTT para gereciamento do protocolo
 var mqttClient;
+//Status da página:
+//0 - Aguardando novas informações
+//1 - Ignorar todas as mensagens recebidas
+var pageState = 0;
+
 
 const MQTT = {
     connect: function (host,port,user,pass,clientId) {
@@ -19,26 +25,29 @@ const MQTT = {
     },
     onConnectionLost: function (responseObject) {
         if (responseObject.errorCode !== 0) {
-            console.log("onConnectionLost:" + responseObject.errorMessage);
+            console.log(responseObject)
+            log.erro("MQTT -> onConnectionLost:" + responseObject.errorMessage);
         }
     },
     onMessageArrived: function (message) {
-        console.log("onMessageArrived:" + message.payloadString);
+        var msg = message.payloadString;
+        log.info(`MQTT -> onMessageArrived: ${msg}`)
+        var json = JSON.parse(msg);
     },
     onFailure: function (message) {
-        console.log("onFailure: Failed");
+        log.erro("MQTT -> onFailure: Failed");
         setTimeout(MQTTconnect, 2000);
     },    
     onConnected: function (recon, url) {
-        console.log("onConnected: " + reconn);
+        log.info("MQTT -> onConnected: " + reconn);
     },
     onConnect: function () {
-        console.log("onConnect: " + mqttClient.isConnected());
+        log.info("MQTT -> onConnect: " + mqttClient.isConnected());
     },
     subscribe: function (stopic, sqos) {
     
         if (!mqttClient.isConnected()) {
-            console.log("Not Connected so can't subscribe");
+            log.erro("MQTT -> Not Connected so can't subscribe");
             return;
         }
     
@@ -51,7 +60,7 @@ const MQTT = {
     },    
     sendMessage: function (topic, msg, retain_flag, pqos) {
         if (!mqttClient.isConnected()) {
-            console.log("Not Connected so can't send");
+            log.erro("MQTT -> Not Connected so can't send");
             return;
         }
     

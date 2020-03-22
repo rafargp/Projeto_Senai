@@ -17,17 +17,20 @@
 <body>
     <div class="container">
         <h2 style="padding-bottom:10px">Projeto de localização de Beacons Bluetooth Indoor utilizando ESP32</h2>
-
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <canvas id="myCanvas" width="600" height="600"></canvas>
             </div>
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-success">Buscar Beacons</button>
-                <button type="button" class="btn btn-success">Editar Estação</button>
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-success" id="btnGetBeacons">Buscar Beacons</button>
+                        <button type="button" class="btn btn-success">Editar Estação</button>
+                    </div>
+                </div>
             </div>
         </div>
-        
+
         <div style="padding-bottom: 10px"></div>
 
         <div class="row">
@@ -46,8 +49,10 @@
                 </table>
             </div>
         </div>
+        <div style="padding-bottom: 10px"></div>
         <div class="row">
             <div class="col-sm-12">
+                <textarea id="txtLog" rows="50" style="width: 100%"></textarea>
             </div>
         </div>
     </div>
@@ -56,12 +61,14 @@
     <!-- https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
     <script src="bootstrap-4.4.1/js/bootstrap.min.js"></script>
     <!-- http://www.eclipse.org/paho/files/jsdoc/Paho.MQTT.Client.html -->
-    <script src="mqttws31/mqttws31.min.js"></script> 
+    <script src="mqttws31/mqttws31.min.js"></script>
+    <!-- https://raw.githubusercontent.com/nodeca/pako/master/dist/pako.js -->
+    <script src="pakojs/pako.js"></script>
     <!-- PROJECT -->
+    <script src="helper.js"></script>
     <script src="mqttConfig.js"></script>
     <script src="station.js"></script>
     <script src="beacon.js"></script>
-    <script src="helper.js"></script>
     <script src="start.js"></script>
 </body>
 
