@@ -12,11 +12,8 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
-//Constante que define o valor maximo de um pacote MQTT para publicação
-#define MQTT_MAX_PACKET_SIZE 2048
 //Constante que define a quantidade maxima que a estaçao poderá ler
 #define MAX_BEACONS_BUFFER 50
-
 //Constante que define o tempo de busca do bluetooth, em segundos
 const int beaconScanTime = 4;
 //Constante que o nome do dispositivo bluetooth da estação
@@ -242,7 +239,7 @@ void sendBeaconsJSON()
   Serial.print("Publishing: ");
   Serial.print(payload);
   payload.getBytes(message_char_buffer, payload.length() + 1);
-  result = client.publish(pubTopics[0], message_char_buffer, payload.length(), false);
+  result = client.publish_P(pubTopics[0], message_char_buffer, payload.length(), false);
   Serial.print(" -> Result: ");
   Serial.println(result);
 
