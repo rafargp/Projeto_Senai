@@ -5,7 +5,7 @@ var mqttClient;
 //1 - Ignorar todas as mensagens recebidas
 var pageState = 0;
 
-
+//Objeto MQTT com funções pertinentes ao protocolo
 const MQTT = {
     connect: function (host,port,user,pass,clientId) {
         let mqtt = new Paho.MQTT.Client(host, port, clientId);
@@ -32,10 +32,13 @@ const MQTT = {
     onMessageArrived: function (message) {
         var msg = message.payloadString;
         log.info(`MQTT -> onMessageArrived: ${msg}`)
+        if(pageState > 0) return;
+        log.info(`MQTT -> processando mensagem`)
         var json = JSON.parse(msg);
+        Station.processMessage(json);
     },
     onFailure: function (message) {
-        log.erro("MQTT -> onFailure: Failed");
+        log.erro("MQTT -> onFailure: Falha");
         setTimeout(MQTTconnect, 2000);
     },    
     onConnected: function (recon, url) {
@@ -47,7 +50,7 @@ const MQTT = {
     subscribe: function (stopic, sqos) {
     
         if (!mqttClient.isConnected()) {
-            log.erro("MQTT -> Not Connected so can't subscribe");
+            log.erro("MQTT -> Não conectado, nao poderá subscrever");
             return;
         }
     
@@ -60,10 +63,10 @@ const MQTT = {
     },    
     sendMessage: function (topic, msg, retain_flag, pqos) {
         if (!mqttClient.isConnected()) {
-            log.erro("MQTT -> Not Connected so can't send");
+            log.erro("MQTT -> Não conectado, nao poderá enviar");
             return;
         }
-    
+        log.info(`MQTT -> Enviando mensagem: "${msg}", Tópico: "${topic}", Retain: "${retain_flag}", QoS: ${pqos}`);
         if (pqos > 2) pqos = 0;
         message = new Paho.MQTT.Message(msg);
         message.destinationName = topic;
