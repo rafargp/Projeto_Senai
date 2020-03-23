@@ -57,15 +57,16 @@ const Canvas = {
                     dragok = true;
                     s.isDragging = true;
                 }
-            } else {
-                var dx = s.x - mx;
-                var dy = s.y - my;
-                // test if the mouse is inside this circle
-                if (dx * dx + dy * dy < s.r * s.r) {
-                    dragok = true;
-                    s.isDragging = true;
-                }
-            }
+            } 
+            // else {
+            //     var dx = s.x - mx;
+            //     var dy = s.y - my;
+            //     // test if the mouse is inside this circle
+            //     if (dx * dx + dy * dy < s.r * s.r) {
+            //         dragok = true;
+            //         s.isDragging = true;
+            //     }
+            // }
         }
         // save the current mouse position
         startX = mx;
@@ -79,9 +80,7 @@ const Canvas = {
 
         // clear all the dragging flags
         dragok = false;
-        for (var i = 0; i < shapes.length; i++) {
-            shapes[i].isDragging = false;
-        }
+        for (var i = 0; i < shapes.length; i++) shapes[i].isDragging = false;
     },
     // handle mouse moves
     myMove: function (e) {
