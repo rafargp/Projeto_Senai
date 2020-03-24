@@ -1,5 +1,5 @@
 //Proporção
-var px_meter = 8.5;
+var px_meter = 100;
 
 const Application = {
     processMessage: function (message) {
@@ -83,6 +83,26 @@ const Application = {
                 shape.r = 20;
             }
         }
+    },
+    getNearestBeacon: function(element){
+        var beacons = [];
+        var groupBeacon = Helper.groupBy(Beacon.getAllBeacons(), "mac");
+        for (i in groupBeacon) {
+            if (groupBeacon[i].length > 2) beacons.push(groupBeacon[i]);
+        }
+        if (beacons.length == 0) return;
+
+        let nearBeacon = { beacon: undefined, distance: 99999 }
+        for(z in beacons){
+            for(i in beacons[z]){
+                var d = Helper.pythagoras(element.x,element.y,beacons[z][i].x(),beacons[z][i].y());
+                if( d < nearBeacon.distance){
+                    nearBeacon.beacon = beacons[i][z];
+                    nearBeacon.distance = d;
+                }
+            }
+        }
+        return nearBeacon;
     },
     calculateDistance: function (rssi) {
         let P = -69;
