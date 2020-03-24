@@ -42,8 +42,8 @@ const Beacon = {
                     this.reDrawTableRow(bc);
                 }
             }
-            this.updateZeroRssi(stations[i]);
         }
+        this.updateZeroRssi();
     },
     drawTableRow: function (beacon) {
         var st = beacon.getStation();
@@ -82,13 +82,21 @@ const Beacon = {
             log.info(`reDrawTableRow -> Linha atualizada para beacon ${beacon.name} (${beacon.mac})`);
         }
     },
-    updateZeroRssi: function(station){
-        var colIndex = $(`#tableHead th#${station.id()}`).index();
-        $("#tableBody tr").each(function(i,row){
-            var id = row.id;
-            if(station.hasBeaconId(id) !== undefined) return;
-            var newRow = $(`#${id} th:eq(${colIndex})`);
-            if(newRow[0] === undefined){
-        });
+    updateZeroRssi: function(){
+        for(i in stations){
+            var station = stations[i];
+            var colIndex = $(`#tableHead th#${station.id()}`).index();
+            $("#tableBody tr").each(function(i,row){
+                var id = row.id;
+                if(station.hasBeaconId(id) !== undefined) return;
+                var newRow = $(`#${id} th:eq(${colIndex})`);
+                if(newRow[0] === undefined){
+                    var old = $(`#${id}`).html();
+                    $(`#${id}`).html(`${old}<th scope="row">0</th>`);    
+                }else{
+                    newRow.html(`0`);
+                }
+            });
+        }
     }
 }
