@@ -52,6 +52,12 @@
 % ---
 
 % ---
+% Pacotes de citações
+% ---
+\graphicspath{ {./images/} }
+% ---
+
+% ---
 % Configurações do pacote backref
 % ---
 % Usado sem a opção hyperpageref de backref
@@ -233,7 +239,7 @@ Na realidade, estes ambientes não são mapeados para que um sistema de GPS poss
 	\item Alta atenuação e difusão do sinal, devido aos inúmeros obstáculos;
 	\item Mudanças temporais relacionadas à movimentação de pessoas e abertura de portas;
 	\item Multipath causado pela reflexão das paredes e móveis.	
-	\end{enumerate}	
+\end{enumerate}	
 Por outro lado, os ambientes internos oferecem algumas facilidades, já que não sofrem interferências de fatores climáticos; podem ser facilmente mapeados e possuem melhor infraestrutura (acesso a internet e energia elétrica). Portanto, neste trabalho, o estudo da localização baseada na leitura bidirecional do RSSI será destinado a ambientes indoor.
 
 \section{Estudo de Caso}
@@ -251,7 +257,10 @@ Segundo PENSO (2020), os data centers são importantes para realizar atividades 
 \subsection{Topologia}
 A internet das coisas (IOT) proporcionou o uso do protocolo Transporte de Telemetria do Serviço de Enfileiramento de Mensagens (MQTT) para comunicação entre os hardwares de forma harmoniosa sendo possível troca de informações entre as TAG’s, ERB’s, aplicativo para celular (APP) de alarmes, software de monitoramento e servidor em nuvem. 
 Segundo Zhu (2010) a origem do protocolo MQTT surgiu no laboratório Massachusetts Institute of Technology (MIT) com a pesquisa no campo de localização e identificação usando sensores sem fio, em 1999, onde deu inicio a área de estudos da Internet das Coisas.
-****Aqui tem uma Figura****
+\begin{figure}[t]
+\includegraphics{topologia}
+\centering
+\end{figure}
 Na figura 01 pode-se ver o fluxo de dados utilizando o protocolo MQTT para este trabalho.
 O servidor com aplicação MQTT Node-RED da International Business Machines (IBM) recebe os estímulos de um APP que simula um possível alarme e equipamento instalado em um ambiente indor. As ERB’s verificam a intensidade do sinal RFID vindas das TAG’s IBeacons, que também são informadas sobre o alarme mais próximo.
 \subsection{Hardware}
@@ -277,5 +286,6 @@ Dedicamos este trabalho aos amigos e professores que nos apoiaram para nossa for
 
 \bibliographystyle{plain}
 \bibliography{references.bib}
+
 
 \end{document}
