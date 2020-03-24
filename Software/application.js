@@ -120,14 +120,15 @@ const Application = {
             for(i in beacons[z]){
                 log.info(`Application -> getNearestBeacon: Calculando distancia`);
                 var d = Helper.pythagoras(element.x,element.y,beacons[z][i].x(),beacons[z][i].y());
-                log.info(`Application -> getNearestBeacon: Beacon ${beacons[i][z].id()}, Distancia: ${d}`);
+                log.info(`Application -> getNearestBeacon: Beacon ${beacons[z][i].id()}, Distancia: ${d}`);
                 if( d < nearBeacon.distance){
                     log.info(`Application -> getNearestBeacon: Nova Menor distancia encontrada`);
-                    nearBeacon.beacon = beacons[i][z];
-                    nearBeacon.distance = d/px_meter;
+                    nearBeacon.beacon = beacons[z][i];
+                    nearBeacon.distance = d;
                 }
             }
         }
+        nearBeacon.distance /= px_meter;
         log.info(`Application -> getNearestBeacon: Beacon ${nearBeacon.beacon.id()} com menor distancia de ${nearBeacon.distance}M encontrado`);
         return nearBeacon;
     },
