@@ -17,5 +17,14 @@ $(document).ready(function () {
         log.info("MQTT -> Publicando mensagem e aguardando retorno")
         MQTT.sendMessage("/stations/command", "findAndSendJSON", false, 0);
     });
+    $(document).on("click", "#btnGetNearBeacon", function () {
+        var server = shapes.find(x => x.id == "Server");
+        var b = Application.getNearestBeacon(server);
+        shapes.find(x => x.id === b.beacon.id()).fill = "#0000FF";
+        Canvas.draw();
+        alert(`Beacon mais Proximo: ${b.beacon.name} [${b.beacon.mac}]: ~ ${b.distance} Metros`)
+        
+    });
+    
 
 });

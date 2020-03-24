@@ -98,7 +98,7 @@ const Application = {
                 var d = Helper.pythagoras(element.x,element.y,beacons[z][i].x(),beacons[z][i].y());
                 if( d < nearBeacon.distance){
                     nearBeacon.beacon = beacons[i][z];
-                    nearBeacon.distance = d;
+                    nearBeacon.distance = d/px_meter;
                 }
             }
         }
