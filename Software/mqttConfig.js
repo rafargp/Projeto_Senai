@@ -1,9 +1,5 @@
 //Cliente MQTT para gereciamento do protocolo
 var mqttClient;
-//Status da página:
-//0 - Aguardando novas informações
-//1 - Ignorar todas as mensagens recebidas
-var pageState = 0;
 
 //Objeto MQTT com funções pertinentes ao protocolo
 const MQTT = {
@@ -32,7 +28,6 @@ const MQTT = {
     onMessageArrived: function (message) {
         var msg = message.payloadString;
         log.info(`MQTT -> onMessageArrived: ${msg}`)
-        if(pageState > 0) return;
         log.info(`MQTT -> processando mensagem`)
         var json = JSON.parse(msg);
         Station.processMessage(json);

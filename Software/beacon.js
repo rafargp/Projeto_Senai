@@ -1,7 +1,8 @@
 const Beacon = {
     drawBeacon: function (beacon) {
         log.info(`drawBeacon -> ${beacon.mac}`);
-        shapes.push({ x: beacon.x, y: beacon.y, r: 20, fill: "#800080", isDragging: false });
+        if(shapes.find(x => x.id == beacon.id()) !== undefined) return;
+        shapes.push({ id: beacon.id(), x: beacon.x, y: beacon.y, r: 20, fill: "#800080", isDragging: false });
         Canvas.draw();
         log.info(`drawBeacon -> beacon ${beacon.mac} foi desenhado em x=${beacon.x}, y=${beacon.y}`);
     },
@@ -13,19 +14,25 @@ const Beacon = {
         beacon.getStation().beacons.push(beacon);
         log.info(`addBeacon -> ${beacon.mac} adicionado`);
         this.drawBeacon(beacon);
-        this.reDrawTable();
+        
         return true;
     },
-    delBeacon: function (beacon) {
-        if (beacon.getStation() === undefined) {
-            log.erro(`delBeacon -> ${beacon.station} não encontrada`);
-            return false;
+    delBeacon: function (station,beacon) {
+        var canRemove = true;
+        for(i in stations){
+            if(stations[i].id() === station.id()) continue;
+            canRemove = canRemove & (!stations[i].hasBeacon(beacon));
         }
+        if(!canRemove) return;
+        for (var i = shapes.length - 1; i >= 0; --i){
+            if (shapes[i].id == beacon.id()) shapes.splice(i,1);        
+        }
+        $(`#${beacon.id()}`).remove();
     },
     reDrawTable: function () {
-        for (station in stations) {
-            for (beacon in stations[station].beacons) {
-                var bc = stations[station].beacons[beacon];
+        for (i in stations) {
+            for (beacon in stations[i].beacons) {
+                var bc = stations[i].beacons[beacon];
                 var row = $(`#${bc.id()}`)[0];
                 if (row === undefined) {
                     log.info(`reDrawTable -> Criando nova linha para beacon ${bc.name} (${bc.mac})`);
@@ -35,6 +42,7 @@ const Beacon = {
                     this.reDrawTableRow(bc);
                 }
             }
+            this.updateZeroRssi(stations[i]);
         }
     },
     drawTableRow: function (beacon) {
@@ -42,11 +50,14 @@ const Beacon = {
         var tBody = $("#tableBody");
         var tHeaders = $("#tableHead").find("th");
 
-        var print = `<tr>`;
+        var print = `<tr id="${beacon.id()}">`;
         for (var x = 0; x < tHeaders.length; x++) {
             var col = tHeaders[x];
-            if (col.id === "") {
+            if (col.id === "bMac") {
                 print += `<th scope="row">${beacon.mac}</th>`;
+            }else if (col.id === "bName") {
+                if(beacon.name === "") print += `<th scope="row">S/N</th>`;
+                else print += `<th scope="row">${beacon.name}</th>`;
             } else if (col.id === st.id()) {
                 print += `<th scope="row">${beacon.rssi}</th>`;
             } else {
@@ -58,5 +69,26 @@ const Beacon = {
         log.info(`drawTableRow -> Nova linha criada para beacon ${beacon.name} (${beacon.mac})`);
 
         tBody.append(print);
+    },
+    reDrawTableRow: function(beacon){
+        var st = beacon.getStation();
+        var colIndex = $(`#tableHead th#${st.id()}`).index();
+        var row = $(`#${beacon.id()} th:eq(${colIndex})`);
+        if(row[0] === undefined){
+            var old = $(`#${beacon.id()}`).html();
+            $(`#${beacon.id()}`).html(`${old}<th scope="row">${beacon.rssi}</th>`);
+        }else{
+            $(`#${beacon.id()} th:eq(${colIndex})`).html(beacon.rssi);
+            log.info(`reDrawTableRow -> Linha atualizada para beacon ${beacon.name} (${beacon.mac})`);
+        }
+    },
+    updateZeroRssi: function(station){
+        var colIndex = $(`#tableHead th#${station.id()}`).index();
+        $("#tableBody tr").each(function(i,row){
+            var id = row.id;
+            if(station.hasBeaconId(id) !== undefined) return;
+            var newRow = $(`#${id} th:eq(${colIndex})`);
+            if(newRow[0] === undefined){
+        });
     }
 }
