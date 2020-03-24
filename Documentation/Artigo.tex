@@ -35,6 +35,7 @@
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% Para melhorias de justificação
 \usepackage{float}				% Para ajuste na posição de figuras e tabelas
+\usepackage{cite}				% Para ajuste na posição de figuras e tabelas
 % ---
 		
 % ---
@@ -71,10 +72,10 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{Projeto para localização de dispositivos bluetooth indoor}
-\autor{Rafael Gomes de Paula,\and Nome do segundo autor, \and Demais autores}
+\titulo{Projeto para localização de dispositivos bluetooth BLE indoor}
+\autor{Josimar de Andrade Silva, \and Rafael Gomes de Paula,\and Wanderson Thiago da Silva Pagani}
 \local{Brasil}
-\data{} 
+\data{24/03/2020} 
 % ---
 
 % ---
@@ -185,9 +186,22 @@
  \vspace{\onelineskip}
  
  \noindent
- \textbf{Palavras-chave} – artigo científico; formatação; Internet das Coisas 
+ \textbf{Palavras-chave} – IoT; Internet das Coisas; Comunicação; Localização; Sinal; Rádio Frequência; Alarmes; Indoor 
 \end{changemargin}
+% ---
 
+% -----------------------------------------------------------
+% Resumo em inglês
+% -----------------------------------------------------------
+
+\begin{changemargin}{1cm}{1cm} 
+\textbf{Abstract} – The project proposal is to create a real-time location system for bluetooth devices within an enclosed location. The hardware consists of creating a device using ESP32, capable of locating other bluetooth devices, such as IBeacons, through the triangulation of these devices that we call "tracking stations". The stations made available the information of the devices found through the internet, using the MQTT protocol and the Node-Red platform. The Software consists of a website, built using Node.js as an application server, capable of connecting to Node-Red and interpreting the data. The platform is responsible for receiving the data and determining which is the closest device within the radius of the triangulation of the stations
+\vspace{\onelineskip}
+	
+\noindent
+\textbf{Keywords} – IoT; Internet of Things; Comunication; Location; Signal; Radio Frequency; Alarm; Indoor 
+\end{changemargin}
+   
 % ---
 
 % ----------------------------------------------------------
@@ -203,148 +217,65 @@
 \let\thefootnote\svthefootnote
 % ---
 
-  Esse artigo foi preparado com TeXstudio versão 2.11 e Overleaf. Deixe o primeiro parágrafo de uma seção, sub-seção ou item sem tabulação. Os demais parágrafos podem ser tabulados.  Deixe o texto dos parágrafos justificados, isto é, alinhados à esquerda e a direita, como já é feito automaticamente pelo LaTeX.
-    
-	Use apenas a fonte proporcional com serifas “Computer Modern Unicode Serif (CMU Serif)”, padrão do LaTeX, para escrever o texto do artigo.  O tamanho de fonte padrão é 12 pt.  Use esse tamanho em todo o corpo do artigo, a menos que outro tamanho seja indicado (como é o caso dos títulos de seções e sub-seções).
-    
-	O título do artigo deve aparecer 24 pt (ou duas linhas) abaixo do topo da primeira página, centrado e usando fonte tamanho 14 pt (sem negrito ou sublinhado).  Coloque a primeira letra de cada palavra em maiúscula (com exceção de partículas como artigos e preposições).
-    
-	Deixe um espaço de 12 pt (ou uma linha) em branco após o título e inclua a lista de nomes de autores(as) separados por vírgulas, centrada na página.  Se necessário, use mais de uma linha para listar todos os nomes.  Não inclua dados de filiação ou títulos na primeira página: há um espaço reservado para mini-currículos ao final do artigo.
-    
-	O resumo do artigo e a lista de palavras-chave vêm em seguida, separadas por espaços de 12 pt, como mostra o exemplo acima.  Esta última começa com “Palavras-chave”, em negrito, seguida de um traço e da lista separada por ponto-e-vírgula.
+De acordo com LIMA (2014) o primeiro sistema de identificação por radiofrequência (RFID) surgiu em 1937 com a invenção do primeiro radar, liderado pelo escocês Sir Robert Alexander Watson-Watt da United States Naval Research Laboratory.
+Após a invenção do primeiro radar, a tecnologia RFID tem sido usada para diversos tipos de aplicação, como controle de segurança, monitoramento, controle de temperatura, rastreabilidade, entre outras diversas situações.
+Segundo OMEGA (2020) os sensores sem fio utilizados em aplicações de localização são ferramentas de medição padrão equipadas com transmissores utilizados para converter sinais de instrumentos de controle de processo em uma transmissão de rádio. O sinal de rádio é interpretado por um receptor que converte o sinal sem fio em uma saída específica, tal como uma corrente analógica ou uma análise de dados feita por um software.  
+LOUREIRO (2003) exemplifica que cada sensor possui características particulares que variam de acordo com o ambiente e objetivo do uso, sendo alguns desses sensores: com endereçamento, para mobilidade, limitação de energia e outros.
+A pesquisa apresentada neste trabalho se refere aos sensores RFID, aplicados para simplificação de atividades humanas em locais indoor. Um exemplo disso são os sistemas de localização e cálculo de distância, que utilizam as propriedades da rádio frequência como um recurso para calcular a posição ou a longitude entre dois objetos.
+O objetivo principal deste trabalho é demonstrar uma das técnicas baseada no sinal Bluetooth de Baixa Energia (BLE) mais utilizadas nos sensores de localização indor, a Indicação de Intensidade do Sinal de Rádio (RSSI), que utiliza, respectivamente, o tempo de chegada do sinal a uma ERB (Estação Base), o ângulo de chegada do sinal em relação às Estações de Rádio Base (ERB’s) e a intensidade do sinal, para calcular a posição de um objeto.  
+Este trabalho, portanto, orientar-se-á no sentido de analisar o processo de localização de pessoas em um ambiente indor de modo a utilizar a técnica RSSI, podendo ajudar a diminuir o tempo de atuação envolvendo problemas em sistemas de missão crítica.
 
-\section{Seção}
+\section{Pesquisa Bibliográfica}
+Ao desenvolver as pesquisas foi utilizado o método de revisão literária, sendo esse um método qualitativo, apoiando-se em técnicas de pesquisa de dados. Realizado pela análise de conteúdos e artigos de sites, artigos técnicos, dissertações de mestrado, pesquisas bibliográficas, manuais e normas técnicas, publicados nos períodos dos últimos 20 anos, sobre o tema em questão.
+Ainda é um grande desafio para as tecnologias de localização em ambientes internos. O Sistema de Posicionamento Global (GPS), por exemplo, é uma das descobertas mais eficientes, tratando-se de tecnologias baseadas nos sensores RFID. No entanto, os metros quadrados de um ambiente indoor estão fora do alcance de seus 28 satélites (LIMA, 2001). 
+Na realidade, estes ambientes não são mapeados para que um sistema de GPS possa localizá-los. Desta forma, o foco de pesquisas associadas à localização de pessoas e objetos têm se baseado na busca por tecnologias apropriadas a ambientes internos. Muitas das dificuldades estão relacionadas, já que estes locais apresentam uma estrutura que não se vê externamente, como COLEMAN e (WESTCOTT, 2009):
+\begin{enumerate}
+	\item Alta atenuação e difusão do sinal, devido aos inúmeros obstáculos;
+	\item Mudanças temporais relacionadas à movimentação de pessoas e abertura de portas;
+	\item Multipath causado pela reflexão das paredes e móveis.	
+	\end{enumerate}	
+Por outro lado, os ambientes internos oferecem algumas facilidades, já que não sofrem interferências de fatores climáticos; podem ser facilmente mapeados e possuem melhor infraestrutura (acesso a internet e energia elétrica). Portanto, neste trabalho, o estudo da localização baseada na leitura bidirecional do RSSI será destinado a ambientes indoor.
 
-Deixe um espaço em branco de 12 pt (ou uma linha) antes e depois do título de uma seção.  As seções devem ser numeradas sequencialmente com algarismos arábicos. 
+\section{Estudo de Caso}
+\subsection{Objetivo}
+O objetivo do estudo de caso referente a este trabalho é demonstrar a necessidade que os data centers tem em resolver problemas de infraestrutura em um menor tempo possível e o que impacta com um problema não resolvido, influenciando na sociedade.
+Para demonstrar a utilização do projeto, foi escolhido o Data Center Prodesp, considerado ambiente de missão crítica, onde em uma situação de crise na infraestrutura, o tempo de atuação dos técnicos deve ser o mais rápido possível
+\subsection{Justificativa}
+De acordo com ICOR (2020), existem muitos fatores de risco de paralisação nos Data Centers, como falhas naturais, humanas e de origem dos hardwares e sistemas instalados. Onde o maior percentual de causas da paralisação dos data centers são por falhas humanas. 
+Devido a planta do Data Center Prodesp ser de grande escala em relação ao numero de técnicos para manter a energia elétrica constante alimentando os equipamentos de Tecnologia da Informação (TI) e equipamentos de climatização (Ar-condicionado de precisão), foi possível uma projeção para melhorar o tempo de atuação dos técnicos em um ocorrência (alarmes) com o uso de um localizador de pessoas indor por meio da tecnologia RSSI.
+Considerado que a equipe de manutenção residente do Data Center Prodesp leva em média 5 minutos para localizar uma ocorrência através de um sistema supervisório Controle de Supervisão e Aquisição de Dados (SCADA), com a ajuda do localizador esse tempo pode ser menor, de acordo com a proximidade entre o técnico atuante e o equipamento em alarme. 
+\subsection{Relevância para a Sociedade}
+Segundo PENSO (2020), os data centers são importantes para realizar atividades simples do cotidiano, sendo desde a Internet, que você acessa para se divertir com jogos e vídeos, até os pagamentos feitos no aplicativo do seu banco, consultas de saldo e extrato, transferências ou aplicações.
 
-O título da seção deve usar fonte tamanho 14 pt (sem negrito nem itálico).
+\section{Definição do Projeto}
+\subsection{Topologia}
+A internet das coisas (IOT) proporcionou o uso do protocolo Transporte de Telemetria do Serviço de Enfileiramento de Mensagens (MQTT) para comunicação entre os hardwares de forma harmoniosa sendo possível troca de informações entre as TAG’s, ERB’s, aplicativo para celular (APP) de alarmes, software de monitoramento e servidor em nuvem. 
+Segundo Zhu (2010) a origem do protocolo MQTT surgiu no laboratório Massachusetts Institute of Technology (MIT) com a pesquisa no campo de localização e identificação usando sensores sem fio, em 1999, onde deu inicio a área de estudos da Internet das Coisas.
+****Aqui tem uma Figura****
+Na figura 01 pode-se ver o fluxo de dados utilizando o protocolo MQTT para este trabalho.
+O servidor com aplicação MQTT Node-RED da International Business Machines (IBM) recebe os estímulos de um APP que simula um possível alarme e equipamento instalado em um ambiente indor. As ERB’s verificam a intensidade do sinal RFID vindas das TAG’s IBeacons, que também são informadas sobre o alarme mais próximo.
+\subsection{Hardware}
+\subsection{Programa}
 
-\subsection{Subseção}
+\section{Validação}
+\subsection{Testes}
+\subsection{Acertos}
 
-Seções podem ser divididas em subseções.  Deixe um espaço de 12 pt antes do título da subseção e 6 pt (ou meia linha) depois.  Numere as subseções com o número da seção e da subseção, separados por um ponto, iniciando as subseções por ‘1’ em cada seção.  O título da subseção deve usar fonte tamanho 12 pt (sem negrito nem itálico).
+\section{Resultados}
+\subsection{Positivos}
+\subsection{Negativos}
 
-Esta é a estrutura preferencial do artigo, com apenas 2 níveis: seção e subseção.  Procure organizar seu artigo desta forma.
-
-\begin{enumerate}[label=\Alph*]
-\item \textit{Subitem}
-
-Se realmente for necessário usar um nível a mais, divida a subseção em subitens.  Deixe um espaço de 12 pt antes do título do subitem e nenhum espaço depois.  Numere os subitens com letras maiúsculas, iniciando por A em cada subseção.   O título do subitem deve usar fonte tamanho 12 pt, em itálico (sem negrito).
-
-Por favor, não estruture seu artigo com mais do que três níveis de hierarquia (ou seja, não crie um sub-subitem).  Se um do seu artigo subitem está tão longo a ponto de ser necessário dividi-lo, é sinal que ele deve constituir uma subseção ou até mesmo uma nova seção.
-
-\end{enumerate}
-
-\section{Figura}
-
-Figuras devem ser centradas na página e numeradas com algarismos arábicos.  A legenda segue abaixo e numerada. Separe a figura do texto anterior com um espaço de 12 pt. 
-
-A figura deve estar na mesma pasta do arquivo, ou ser adicionada no Overleaf, clicando em project e adicionando a imagem.
-
-% \begin{figure}[H]     % Com o pacote "float", o "[H]" fixa a figura nesse lugar 
-%     \centering
-%     \includegraphics[width=0.5\textwidth]{figure}
-%     \caption{figura}
-%     \label{figura}
-% \end{figure}
-
-Após a legenda, deixe um espaço em branco de 12 pt para o texto seguinte.
-
-\section{Tabelas}
-
-Tabelas devem ser centradas na página e numeradas com algarismos arábicos.  A legenda deve ficar acima da tabela.   Linhas verticais são opcionais.  Separe a figura do texto anterior com um espaço de 12 pt. 
-
-\begin{table}[H]     % Com o pacote "float", o "[H]" fixa a figura nesse lugar
-\centering
-\caption{Legenda da tabela}
-\label{my-label}
-
-\begin{tabular}{c|c|c|c}
-Data       & Versão & Descrição   & Autor  \\ \hline
-12/09/2015 & 1      & Descrição 1 & Nome 1 \\
-05/12/2015 & 2      & Descrição 2 & Nome 2
-\end{tabular}
-\end{table}
-
-Após a legenda, deixe um espaço em branco de 12 pt para o texto seguinte. 
-
-\section{Equações}
-
-Equações devem separadas do texto por espaços de 6 pt (meia linha) antes e depois.  Numere as equações com algarismos arábicos, colocados entre parênteses e alinhados à esquerda,  como mostra o exemplo a seguir.
-
-\begin{equation}
-x = y+1.
-\end{equation}
-
-Pontue a equação e continue o texto seguinte como se a equação fosse parte do texto.  Por exemplo, a equação 1 termina com um ponto final e o parágrafo seguinte a ela (que é este) começa em maiúscula e com tabulação.  Segundo exemplo: em
-
-\begin{displaymath}
-y = x-1,
-\end{displaymath}
-
-segue-se a equação 2 com uma vírgula, e o parágrafo seguinte (que é este) começa em minúscula e sem tabulação. Utilize "\$"  para inserir equações no meio do texto, como em $y=x-2$.
-
-\section{Referências Bibliográficas}
-
-Referências devem ser citadas no texto no formato (SOBRENOME, ano) ou (SOBRENOME1 e SOBRENOME2, ano), entre parênteses, com os sobrenomes dos autores em maiúscula e o ano de publicação com 4 dígitos.  Havendo muitos autores, indique o primeiro e abrevie os demais com “et al.” – por exemplo (FULANO et al., 1998).
-
-Caso deseje citar uma obra forma textual no artigo, inclua o ano da publicação entre parênteses após o(s) nome(s) dos autor(es).  Por exemplo: “Segundo Fulano e Sicrano (1999), é possível que...”.
-
-%Para mais informações sobre como citar adequadamente diferentes tipos de trabalho, consulte por exemplo as diretrizes compiladas pela Divisão de Bibliotecas da Escola Politécnica da USP (2013), disponível em
-
-%http://www.poli.usp.br/images/stories/media/download/bibliotecas/DiretrizesTesesDissertacoes.pdf
-
-\appendix
-\section*{Apêndices}
- 
-A seção de apêndices é opcional.  Se precisar incluí-la, deixe 24 pt (duas linhas) de espaço antes do título “Apêndices”,  escrito centrado na linha, em letras maiúsculas (ou versalete) e tamanho 14 pt.
- 
-\addcontentsline{toc}{section}{Apêndices}   % Definindo seção de apêndice
-\renewcommand{\thesection}{\textit{\Alph{section}} }
-\section{\textit{Primeiro apêndice}}
- 
-Deixe um espaço de 12 pt antes e depois do título do apêndice.  Escreva o título em tamanho 14 pt e em itálico.  Os apêndices devem ser numerados com letras maiúsculas.
-
+\section{Conclusão}
+Em vista que, foi possível demonstrar como funciona e como se monitora pessoas por sistema RSSI, pode se afirmar que foi alcançado o objetivo deste trabalho.
+Os objetivos foram atingidos de forma, apresentado o principal tipo e modelo de localizador indor e a sua utilização em sistema de missão crítica. Verificado o principal método de localização indor, RSSI. Através dos ensaios e testes foi possível notar a importância de um bom programa (software) a manter um nível de confiabilidade de localização, através de algoritmos podendo corrigir erros causados por ruídos.
+Para trabalhos futuros sugiro que analisem outros métodos de localização com tecnologia de rádio frequência e a viabilidade econômica em manter a localização indor para grande alcance. Esse trabalho seria de grande valia também, pois demonstra a base do estudo de um sinal RFID, para avaliação da intensidade de sinal em um ambiente indor.
+Pode se concluir com este trabalho que através de ensaios e testes com componentes RSSI é possível garantir a localização de pessoas, diminuindo o risco de falhas e interrupções de funcionalidade em sistemas de missão crítica, garantindo um melhor aproveitamento dos técnicos que atuam para resolver problemas em data centers.
 
 \section*{Agradecimentos}
 
-Agradecimentos (opcional).  Deixe um espaço de 24 pt antes do título “Agradecimentos”, escrito centrado na linha, em maiúscula (ou versalete) e tamanho 14 pt.  Escreva o texto dos agradecimentos após um espaço de 12 pt.
+Dedicamos este trabalho aos amigos e professores que nos apoiaram para nossa formação acadêmica.
 
-\section*{Referências}
-
-O título da seção de referências deve ter uma espaço antes de 24 pt e deve ser escrito centrado na linha, em maiúscula (ou versalete) e tamanho 14 pt.  Deixe um espaço de 12 pt antes do texto da primeira referência.  Deixe um espaço de 6 pt (meia linha) entre as referências.
-Liste as obras pela ordem alfabética do sobrenome do primeiro autor (ou nome da empresa).  Não numere as referências.  Alguns exemplos:
-SOBRENOME, Nome. Título da publicação.  Edição, Cidade de publicação: Editora, ano, páginas $\{ $Referencia$\} $.
-
-SOBRENOME1, Nome1;  SOBRENOME2, Nome2.  Título da publicação.  Edição, Cidade de publicação: Editora, ano, páginas.
-SOBRENOME1, Nome1;  SOBRENOME2, Nome2; et al.  Título da publicação.  Edição, Cidade de publicação: Editora, ano, páginas.
-
-(Se seu artigo não for escrito em inglês, acrescente aqui as versões em inglês do título, resumo e palavras-chaves)
-
-\begin{changemargin}{1cm}{1cm} 
-
-Title: Template for Internet of Things
-
-\textbf{Abstract} – This is the English version of the resume.
-
-\textbf{Keywords} – Comma separated list of keywords.
-
-\end{changemargin}
-
-% \begin{figure}[h]
-%     \includegraphics[width=0.5\textwidth]{figure2}
-%     \caption{figura2}
-%     \label{figura2}
-% \end{figure}
-
-\textbf{Nome do Autor 1}, em negrito, seguido de seu minicurrículo. Foto 3 cm x 4 cm opcional, emoldurada pelo texto do minicurrículo.
-
-% \begin{figure}[h]
-%     \includegraphics[width=0.5\textwidth]{figure2}
-%     \caption{figura2}
-%     \label{figura2}
-% \end{figure}
-
-\textbf{Nome do Autor 2}, seguido de seu minicurrículo. Foto 3 cm x 4 cm opcional, emoldurada pelo texto do minicurrículo.
-
+\bibliographystyle{plain}
+\bibliography{references.bib}
 
 \end{document}
