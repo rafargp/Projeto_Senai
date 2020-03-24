@@ -1,6 +1,8 @@
 const stations = [];
 
+//Objeto responsavel por fazer a gestão das Estações
 const Station = {
+    //Método responsavel por adicionar uma nova estação
     addStation: function (station){
         if(stations[station.name] !== undefined){
             log.info(`addStation -> Estação ${station.name} ja existe na lista com id ${station.id()}`);
@@ -10,6 +12,7 @@ const Station = {
         log.info(`addStation -> Estação ${station.name} foi criada com id ${station.id()}`);
         return true;
     },
+    //Método responsavel por desenhar uma estação no Canvas
     drawStations: function(){
         for(var station in stations){
             var st = stations[station];
@@ -18,7 +21,8 @@ const Station = {
             Canvas.draw();
             log.info(`drawStations -> Estação ${st.name} (${st.mac}) desenhado em x:${st.x} y:${st.y}`);
         }
-    },    
+    },
+    //Método responsavel por criar o cabeçalho na tabela de Estações
     drawTableHeader: function(){
         var tHead = document.getElementById("tableHead");
         for(var station in stations){

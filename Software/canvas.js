@@ -8,20 +8,25 @@ var dragok = false;
 var startX;
 var startY;
 
+//Setup do Canvas
 $(document).ready(function () {
     canvas.onmousedown = Canvas.myDown;
     canvas.onmouseup = Canvas.myUp;
     canvas.onmousemove = Canvas.myMove;
 });
 
+//Objeto responsavel por gerenciar os dados do Canvas
 const Canvas = {
+    //Método que limpa o Canvas
     clear: function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
+    //Método desenha um retangulo
     rect: function (r) {
         ctx.fillStyle = r.fill;
         ctx.fillRect(r.x, r.y, r.width, r.height);
     },
+    //Método desenha um circulo
     circle: function (c) {
         ctx.fillStyle = c.fill;
         ctx.beginPath();
@@ -29,6 +34,7 @@ const Canvas = {
         ctx.closePath();
         ctx.fill();
     },
+    //Método desenha os shapes
     draw: function () {
         this.clear();
         for (var i = 0; i < shapes.length; i++) {
@@ -36,6 +42,7 @@ const Canvas = {
             else this.circle(shapes[i]);
         }
     },
+    //Método Handler para MouseDown no Canvas
     myDown: function (e) {
         // tell the browser we're handling this mouse event
         e.preventDefault();
@@ -63,7 +70,7 @@ const Canvas = {
         startX = mx;
         startY = my;
     },
-    // handle mouseup events
+    //Método Handler para MouseUp no Canvas
     myUp: function (e) {
         // tell the browser we're handling this mouse event
         e.preventDefault();
@@ -73,7 +80,7 @@ const Canvas = {
         dragok = false;
         for (var i = 0; i < shapes.length; i++) shapes[i].isDragging = false;
     },
-    // handle mouse moves
+    //Método Handler para MouseMove no Canvas
     myMove: function (e) {
         // if we're dragging anything...
         if (dragok) {

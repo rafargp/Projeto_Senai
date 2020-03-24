@@ -1,43 +1,52 @@
+//Objeto responsavel pela ações dos Beacons
 const Beacon = {
+    //Método que desenha um Beacon no Canvas
     drawBeacon: function (beacon) {
         log.info(`drawBeacon -> ${beacon.mac}`);
         if (shapes.find(x => x.id == beacon.id()) !== undefined) return;
         shapes.push({ id: beacon.id(), x: Helper.getRandomInt(0, canvas.width), y: Helper.getRandomInt(0, canvas.height), r: 0, fill: "#FFFFFF", isDragging: false });
         Canvas.draw();
-        log.info(`drawBeacon -> beacon ${beacon.mac} foi desenhado em x=${beacon.x()}, y=${beacon.y()}`);
+        log.info(`Beacon -> drawBeacon: beacon ${beacon.mac} foi desenhado em x=${beacon.x()}, y=${beacon.y()}`);
     },
+    //Método que adiona um Beacon na estação indicada
     addBeacon: function (beacon) {
         if (beacon.getStation() === undefined) {
-            log.erro(`addBeacon -> ${beacon.station} não encontrada`);
+            log.erro(`Beacon -> addBeacon: ${beacon.station} não encontrada`);
             return false;
         }
         beacon.getStation().beacons.push(beacon);
-        log.info(`addBeacon -> ${beacon.mac} adicionado`);
+        log.info(`Beacon -> addBeacon ${beacon.mac} adicionado`);
         this.drawBeacon(beacon);
-
         return true;
     },
+    //Método que remove um Beacon da estação indicada
     delBeacon: function (station, beacon) {
         var canRemove = true;
+        log.info(`delBeacon -> Validando se Beacon pode ser removido do Canvas`);
         for (i in stations) {
             if (stations[i].id() === station.id()) continue;
             canRemove = canRemove & (!stations[i].hasBeacon(beacon));
         }
-        if (!canRemove) return;
+        if (!canRemove) {
+            log.warn(`delBeacon -> Beacon ${beacon.id()} não pode ser removido do Canvas pois há uma estação associada`);
+            return;
+        }
         for (var i = shapes.length - 1; i >= 0; --i) {
             if (shapes[i].id == beacon.id()) shapes.splice(i, 1);
         }
+        log.warn(`delBeacon -> Beacon ${beacon.id()} removido do Canvas`);
         $(`#${beacon.id()}`).remove();
+        log.warn(`delBeacon -> Beacon ${beacon.id()} removido da tabela`);
     },
+    //Método que busca todos os Beacons
     getAllBeacons: function () {
         var allBeacons = [];
         for (i in stations) {
-            for (z in stations[i].beacons) {
-                allBeacons.push(stations[i].beacons[z]);
-            }
+            for (z in stations[i].beacons) allBeacons.push(stations[i].beacons[z]);
         }
         return allBeacons;
     },
+    //Método que atualiza os Beacons na tabela
     reDrawTable: function () {
         for (i in stations) {
             for (beacon in stations[i].beacons) {
@@ -54,6 +63,7 @@ const Beacon = {
         }
         this.updateZeroRssi();
     },
+    //Método que cria uma nova linha na tabela para o Beacon indicado 
     drawTableRow: function (beacon) {
         var st = beacon.getStation();
         var tBody = $("#tableBody");
@@ -79,6 +89,7 @@ const Beacon = {
 
         tBody.append(print);
     },
+    //Método que atualiza a linha do Beacon indicado
     reDrawTableRow: function (beacon) {
         var st = beacon.getStation();
         var colIndex = $(`#tableHead th#${st.id()}`).index();
@@ -91,7 +102,9 @@ const Beacon = {
             log.info(`reDrawTableRow -> Linha atualizada para beacon ${beacon.name} (${beacon.mac})`);
         }
     },
+    //Método que preenche os campos vazios para as estações que nao possuem o Beacon
     updateZeroRssi: function () {
+        log.warn(`updateZeroRssi -> Atualizando linhas da tabela`);
         for (i in stations) {
             var station = stations[i];
             var colIndex = $(`#tableHead th#${station.id()}`).index();
