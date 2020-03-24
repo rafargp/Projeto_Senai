@@ -1,1 +1,1 @@
-# Projeto_Senai
+# Projeto Localizaçao Indoor via Bluetooth usando ESP32
