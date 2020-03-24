@@ -57,16 +57,7 @@ const Canvas = {
                     dragok = true;
                     s.isDragging = true;
                 }
-            } 
-            // else {
-            //     var dx = s.x - mx;
-            //     var dy = s.y - my;
-            //     // test if the mouse is inside this circle
-            //     if (dx * dx + dy * dy < s.r * s.r) {
-            //         dragok = true;
-            //         s.isDragging = true;
-            //     }
-            // }
+            }
         }
         // save the current mouse position
         startX = mx;
@@ -107,6 +98,7 @@ const Canvas = {
                 }
             }
             // redraw the scene with the new rect positions
+            Application.calculatePosition();
             Canvas.draw();
             // reset the starting mouse position for the next mousemove
             startX = mx;

@@ -29,8 +29,7 @@ const MQTT = {
         var msg = message.payloadString;
         log.info(`MQTT -> onMessageArrived: ${msg}`)
         log.info(`MQTT -> processando mensagem`)
-        var json = JSON.parse(msg);
-        Station.processMessage(json);
+        Application.processMessage(JSON.parse(msg));
     },
     onFailure: function (message) {
         log.erro("MQTT -> onFailure: Falha");

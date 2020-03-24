@@ -1,10 +1,10 @@
 const Beacon = {
     drawBeacon: function (beacon) {
         log.info(`drawBeacon -> ${beacon.mac}`);
-        if(shapes.find(x => x.id == beacon.id()) !== undefined) return;
-        shapes.push({ id: beacon.id(), x: beacon.x, y: beacon.y, r: 20, fill: "#800080", isDragging: false });
+        if (shapes.find(x => x.id == beacon.id()) !== undefined) return;
+        shapes.push({ id: beacon.id(), x: Helper.getRandomInt(0, canvas.width), y: Helper.getRandomInt(0, canvas.height), r: 0, fill: "#FFFFFF", isDragging: false });
         Canvas.draw();
-        log.info(`drawBeacon -> beacon ${beacon.mac} foi desenhado em x=${beacon.x}, y=${beacon.y}`);
+        log.info(`drawBeacon -> beacon ${beacon.mac} foi desenhado em x=${beacon.x()}, y=${beacon.y()}`);
     },
     addBeacon: function (beacon) {
         if (beacon.getStation() === undefined) {
@@ -14,20 +14,29 @@ const Beacon = {
         beacon.getStation().beacons.push(beacon);
         log.info(`addBeacon -> ${beacon.mac} adicionado`);
         this.drawBeacon(beacon);
-        
+
         return true;
     },
-    delBeacon: function (station,beacon) {
+    delBeacon: function (station, beacon) {
         var canRemove = true;
-        for(i in stations){
-            if(stations[i].id() === station.id()) continue;
+        for (i in stations) {
+            if (stations[i].id() === station.id()) continue;
             canRemove = canRemove & (!stations[i].hasBeacon(beacon));
         }
-        if(!canRemove) return;
-        for (var i = shapes.length - 1; i >= 0; --i){
-            if (shapes[i].id == beacon.id()) shapes.splice(i,1);        
+        if (!canRemove) return;
+        for (var i = shapes.length - 1; i >= 0; --i) {
+            if (shapes[i].id == beacon.id()) shapes.splice(i, 1);
         }
         $(`#${beacon.id()}`).remove();
+    },
+    getAllBeacons: function () {
+        var allBeacons = [];
+        for (i in stations) {
+            for (z in stations[i].beacons) {
+                allBeacons.push(stations[i].beacons[z]);
+            }
+        }
+        return allBeacons;
     },
     reDrawTable: function () {
         for (i in stations) {
@@ -55,8 +64,8 @@ const Beacon = {
             var col = tHeaders[x];
             if (col.id === "bMac") {
                 print += `<th scope="row">${beacon.mac}</th>`;
-            }else if (col.id === "bName") {
-                if(beacon.name === "") print += `<th scope="row">S/N</th>`;
+            } else if (col.id === "bName") {
+                if (beacon.name === "") print += `<th scope="row">S/N</th>`;
                 else print += `<th scope="row">${beacon.name}</th>`;
             } else if (col.id === st.id()) {
                 print += `<th scope="row">${beacon.rssi}</th>`;
@@ -70,30 +79,30 @@ const Beacon = {
 
         tBody.append(print);
     },
-    reDrawTableRow: function(beacon){
+    reDrawTableRow: function (beacon) {
         var st = beacon.getStation();
         var colIndex = $(`#tableHead th#${st.id()}`).index();
         var row = $(`#${beacon.id()} th:eq(${colIndex})`);
-        if(row[0] === undefined){
+        if (row[0] === undefined) {
             var old = $(`#${beacon.id()}`).html();
             $(`#${beacon.id()}`).html(`${old}<th scope="row">${beacon.rssi}</th>`);
-        }else{
+        } else {
             $(`#${beacon.id()} th:eq(${colIndex})`).html(beacon.rssi);
             log.info(`reDrawTableRow -> Linha atualizada para beacon ${beacon.name} (${beacon.mac})`);
         }
     },
-    updateZeroRssi: function(){
-        for(i in stations){
+    updateZeroRssi: function () {
+        for (i in stations) {
             var station = stations[i];
             var colIndex = $(`#tableHead th#${station.id()}`).index();
-            $("#tableBody tr").each(function(i,row){
+            $("#tableBody tr").each(function (i, row) {
                 var id = row.id;
-                if(station.hasBeaconId(id) !== undefined) return;
+                if (station.hasBeaconId(id) !== undefined) return;
                 var newRow = $(`#${id} th:eq(${colIndex})`);
-                if(newRow[0] === undefined){
+                if (newRow[0] === undefined) {
                     var old = $(`#${id}`).html();
-                    $(`#${id}`).html(`${old}<th scope="row">0</th>`);    
-                }else{
+                    $(`#${id}`).html(`${old}<th scope="row">0</th>`);
+                } else {
                     newRow.html(`0`);
                 }
             });

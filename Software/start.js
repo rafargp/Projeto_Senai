@@ -11,6 +11,8 @@ $(document).ready(function () {
         }
     }, 500);
 
+    shapes.push({id: "Server", x:10,y:10,width:40,height:40,fill:"#00FF00",isDragging:false});
+
     $(document).on("click", "#btnGetBeacons", function () {
         log.info("MQTT -> Publicando mensagem e aguardando retorno")
         MQTT.sendMessage("/stations/command", "findAndSendJSON", false, 0);
