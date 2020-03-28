@@ -12,10 +12,6 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
-//Remove valor anterior da constante
-#undef  MQTT_MAX_PACKET_SIZE
-//Constante que define o valor maximo de um pacote MQTT para publicação
-#define MQTT_MAX_PACKET_SIZE 2048
 //Constante que define a quantidade maxima que a estaçao poderá ler
 #define MAX_BEACONS_BUFFER 50
 
