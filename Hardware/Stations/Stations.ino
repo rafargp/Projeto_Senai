@@ -20,19 +20,17 @@ const int beaconScanTime = 4;
 //Constante que o nome do dispositivo bluetooth da estação
 const char *stationName = "Station 1";
 //Constante que define o nome da rede WiFi
-const char *ssid = "RAFAEL - 2.4G";
+const char *ssid = "YOUR_SSID";
 //Constante que define a senha da rede Wifi
-const char *password = "Rafael02";
-// const char *ssid              = "F106_CS10";
-// const char *password          = "Senai4.0";
+const char *password = "YOUR_PASS'";
 //Constante que define o nome do servidor Broker MQTT
-const char *mqttServer = "brware.com.br";
+const char *mqttServer = "YOUR_MQTT_HOST";
 //Constante que define a porta do Broker MQTT
-const int mqttPort = 1883;
+const int mqttPort = "YOUR MQTT PORT";
 //Constante que define o usuário do Broker MQTT
-const char *mqttUser = "brware";
+const char *mqttUser = "YOUR MQTT USER";
 //Constante que define a senha do Broker MQTT
-const char *mqttPassword = "SQRT(pi)!=314";
+const char *mqttPassword = "YOUR MQTT PASSWORD";
 //Constante que define os tópicos de subscrição para o MQTT
 const char *subTopics[1] = {"/stations/command"};
 //Constante que define os tópicos de publicação para o MQTT
